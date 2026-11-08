@@ -1,10 +1,10 @@
-import js from '@eslint/js';
-import prettier from 'eslint-config-prettier';
-import globals from 'globals';
-import tseslint from 'typescript-eslint';
+import js from "@eslint/js";
+import prettier from "eslint-config-prettier";
+import globals from "globals";
+import tseslint from "typescript-eslint";
 
 export default tseslint.config(
-  { ignores: ['dist', 'node_modules', 'coverage'] },
+  { ignores: ["dist", "node_modules", "coverage"] },
 
   js.configs.recommended,
   ...tseslint.configs.strictTypeChecked,
@@ -14,52 +14,57 @@ export default tseslint.config(
     languageOptions: {
       globals: { ...globals.browser },
       parserOptions: {
-        projectService: { allowDefaultProject: ['eslint.config.js'] },
+        projectService: { allowDefaultProject: ["eslint.config.js"] },
         tsconfigRootDir: import.meta.dirname,
       },
     },
     rules: {
-      eqeqeq: 'error',
-      'prefer-const': 'error',
-      'no-var': 'error',
-      'no-param-reassign': ['error', { props: true }],
-      '@typescript-eslint/explicit-function-return-type': ['error', { allowExpressions: true }],
-      '@typescript-eslint/consistent-type-imports': 'error',
-      'no-restricted-syntax': [
-        'error',
+      eqeqeq: "error",
+      "prefer-const": "error",
+      "no-var": "error",
+      "no-param-reassign": ["error", { props: true }],
+      "@typescript-eslint/explicit-function-return-type": [
+        "error",
+        { allowExpressions: true },
+      ],
+      "@typescript-eslint/consistent-type-imports": "error",
+      "no-restricted-syntax": [
+        "error",
         {
           selector: "MemberExpression[property.name='innerHTML']",
-          message: 'Используйте createElement / textContent вместо innerHTML.',
+          message: "Используйте createElement / textContent вместо innerHTML.",
         },
         {
           selector: "CallExpression[callee.property.name='insertAdjacentHTML']",
-          message: 'Используйте createElement / append вместо insertAdjacentHTML.',
+          message:
+            "Используйте createElement / append вместо insertAdjacentHTML.",
         },
       ],
     },
   },
 
   {
-    files: ['src/core/**/*.ts'],
+    files: ["src/core/**/*.ts"],
     rules: {
-      'no-restricted-syntax': [
-        'error',
+      "no-restricted-syntax": [
+        "error",
         {
-          selector: 'ClassDeclaration, ClassExpression',
-          message: 'Игровая логика пишется без классов — только чистые функции.',
+          selector: "ClassDeclaration, ClassExpression",
+          message:
+            "Игровая логика пишется без классов — только чистые функции.",
         },
         {
           selector:
-            'CallExpression[callee.property.name=/^(push|pop|shift|unshift|splice|sort|reverse|fill)$/]',
+            "CallExpression[callee.property.name=/^(push|pop|shift|unshift|splice|sort|reverse|fill)$/]",
           message:
-            'Мутация массива в ядре запрещена — создавайте новый массив (spread, toSorted, map...).',
+            "Мутация массива в ядре запрещена — создавайте новый массив (spread, toSorted, map...).",
         },
       ],
     },
   },
 
   {
-    files: ['**/*.js'],
+    files: ["**/*.js"],
     extends: [tseslint.configs.disableTypeChecked],
   },
 
