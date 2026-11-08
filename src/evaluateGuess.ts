@@ -4,8 +4,16 @@ interface GuessEvaluation {
 }
 
 export const evaluateGuess = (
-  _guess: string,
-  _secret: string,
+  guess: string,
+  secret: string,
 ): GuessEvaluation => {
-  return { bulls: 0, cows: 0 };
+  const secretChars = [...secret.toLowerCase()];
+  const guessChars = [...guess.toLowerCase()];
+
+  const bulls = guessChars.filter((char, i) => char === secretChars[i]).length;
+  const matches = guessChars.filter((char) =>
+    secretChars.includes(char),
+  ).length;
+
+  return { bulls, cows: matches - bulls };
 };
